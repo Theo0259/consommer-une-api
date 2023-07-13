@@ -6,3 +6,38 @@
 h1 {
 	text-align: center;
 }
+
+
+#root{
+	display: flex;
+	flex-wrap : wrap;
+	width: 80%;
+	margin-top: 80px;
+	row-gap: 50px;
+	column-gap: 35px;
+	justify-content: center;
+}
+
+.card {
+    text-align: center;
+    width: 200px;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+}
+
+.name, .email, img{
+text-align: center;
+} 
+
+img{
+	border: 1px solid black;
+}
+
+.name{
+	font-weight: bold;
+}
