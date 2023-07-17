@@ -1,18 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const descDiv = document.getElementById('desc');
+const descDiv = document.getElementById('desc');
+descDiv.classList.add('hidden');
+descDiv.style.pointerEvents = 'none';
+
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.card') && event.target !== descDiv) {
+    closeDescDiv();
+  }
+};
+
+const closeDescDiv = () => {
   descDiv.classList.add('hidden');
   descDiv.style.pointerEvents = 'none';
+};
 
-  // Ajoutez un écouteur d'événement de clic au niveau du document
-  document.addEventListener('click', (event) => {
-    // Vérifiez si le clic s'est produit en dehors de la div "card" et de la div "desc"
-    if (!event.target.closest('.card') && !event.target.closest('#desc')) {
-      // Masquez la div "desc" en ajoutant la classe "hidden"
-      descDiv.classList.add('hidden');
-      descDiv.style.pointerEvents = 'none';
-    }
-  });
-});
+const openDescDiv = (user) => {
+  descDiv.innerHTML = `
+    <h2>${user.first_name} ${user.last_name}</h2>
+    <img src="${user.avatar}" alt="Avatar">
+    <p class="email">${user.email}</p>
+    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  `;
+
+  descDiv.classList.remove('hidden');
+  descDiv.style.pointerEvents = 'auto';
+};
+
+document.addEventListener('click', handleClickOutside);
 
 async function fetchData() {
   try {
@@ -41,17 +54,7 @@ async function fetchData() {
       `;
 
       userInfoDiv.addEventListener('click', () => {
-        const descDiv = document.getElementById('desc');
-        descDiv.innerHTML = `
-          <h2>${user.first_name} ${user.last_name}</h2>
-          <img src="${user.avatar}" alt="Avatar">
-          <p class="email">${user.email}</p>
-          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        `;
-
-        // Supprimer la classe "hidden" de la div avec l'ID "desc"
-        descDiv.classList.remove('hidden');
-        descDiv.style.pointerEvents = 'auto';
+        openDescDiv(user);
       });
 
       rootDiv.appendChild(userInfoDiv);
@@ -63,4 +66,3 @@ async function fetchData() {
 
 fetchData();
 
-  
